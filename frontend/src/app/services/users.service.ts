@@ -10,15 +10,7 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   registerUser(userData: RegisterUserData) {
-    const formData = new FormData();
-
-    Object.keys(userData).forEach(key => {
-      if (userData[key] !== null) {
-        formData.append(key, userData[key]);
-      }
-    });
-
-    return this.http.post<User>(env.apiUrl + '/users', formData);
+    return this.http.post<User>(env.apiUrl + '/users', userData);
   }
 
   login(userData: LoginUserData) {

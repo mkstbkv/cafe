@@ -27,13 +27,10 @@
       <mat-label>Пароль</mat-label>
       <input
         type="password" name="password" autocomplete="new-password"
-        required matInput ngModel #password="ngModel" minlength="8"
+        required matInput ngModel #password="ngModel"
       />
       <mat-error *ngIf="password.touched && password.hasError('required')">
         Введите пароль!
-      </mat-error>
-      <mat-error *ngIf="password.touched && password.hasError('minlength')">
-        Пароль не должен быть меньше 8 символов!
       </mat-error>
     </mat-form-field>
 
