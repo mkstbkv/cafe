@@ -1,0 +1,22 @@
+<div class="box">
+  <div>
+    <a routerLink="/" class="logo">Shop</a>
+  </div>
+  <nav *appUserType="'user' else anonMenu" fxLayoutAlign="end">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item disabled>{{ (user | async)?.displayName }}</button>
+      <button mat-menu-item [routerLink]="['/new/']">Добавить</button>
+      <button mat-menu-item (click)="logout()">Выйти</button>
+    </mat-menu>
+  </nav>
+</div>
+
+<ng-template #anonMenu>
+  <nav>
+    <a mat-button routerLink="/register">Регистрация</a>
+    <a mat-button routerLink="/login">Войти</a>
+  </nav>
+</ng-template>
