@@ -8,7 +8,7 @@ import { AppState } from '../types';
 import {
   createPlacesFailure,
   createPlacesRequest,
-  createPlacesSuccess,
+  createPlacesSuccess, fetchOnePlaceFailure, fetchOnePlaceRequest, fetchOnePlaceSuccess,
   fetchPlacesFailure,
   fetchPlacesRequest,
   fetchPlacesSuccess
@@ -27,9 +27,19 @@ export class PlacesEffects {
     ))
   ));
 
+  fetchPlace = createEffect(() => this.actions.pipe(
+    ofType(fetchOnePlaceRequest),
+    mergeMap(({id}) => this.placesService.getPLace(id).pipe(
+      map(place => fetchOnePlaceSuccess({place})),
+      catchError(() => of(fetchOnePlaceFailure({
+        error: 'Something went wrong'
+      })))
+    ))
+  ));
+
   createPlace = createEffect(() => this.actions.pipe(
     ofType(createPlacesRequest),
-    mergeMap(({placeData}) => this.placesService.createAPlace(placeData).pipe(
+    mergeMap(({placeData}) => this.placesService.createPlace(placeData).pipe(
       map(() => createPlacesSuccess()),
       tap(() => this.router.navigate(['/'])),
       catchError(() => of(createPlacesFailure({error: 'Wrong data'})))

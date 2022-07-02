@@ -31,6 +31,10 @@ const ReviewSchema = new Schema({
         default: 0.0,
         max: 5.0
     },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const Review = mongoose.model('Review', ReviewSchema);

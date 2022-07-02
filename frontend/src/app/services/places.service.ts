@@ -27,7 +27,21 @@ export class PlacesService {
     );
   }
 
-  createAPlace(placeData: PlaceData) {
+  getPLace(id: string) {
+    return this.http.get<Place>(environment.apiUrl + '/places/' + id).pipe(
+      map(response => {
+        return new Place(
+          response._id,
+          response.user,
+          response.title,
+          response.description,
+          response.image
+        );
+      })
+    );
+  }
+
+  createPlace(placeData: PlaceData) {
     const formData = new FormData();
 
     Object.keys(placeData).forEach(key => {

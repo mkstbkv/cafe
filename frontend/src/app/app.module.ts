@@ -36,6 +36,7 @@ import { PlacesComponent } from './pages/places/places.component';
 import { PlaceComponent } from './pages/places/place/place.component';
 import { NewPlaceComponent } from './pages/places/new-place/new-place.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxMaterialRatingModule } from 'ngx-material-rating';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatMenuModule,
     MatSelectModule,
     MatCheckboxModule,
+    NgxMaterialRatingModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

@@ -10,6 +10,8 @@ import { fetchPlacesRequest } from '../../store/places/places.actions';
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.sass']
 })
+
+
 export class PlacesComponent implements OnInit {
   places: Observable<Place[]>
   loading: Observable<boolean>
@@ -24,5 +26,6 @@ export class PlacesComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(fetchPlacesRequest());
   }
+
 
 }

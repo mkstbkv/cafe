@@ -12,8 +12,10 @@
 <ng-template #placesArea>
   <div class="cards">
     <div class="card" *ngFor="let place of places | async">
-      <img [src]="place.image | image" alt="">
+      <img [src]="place.image | image" [alt]="place.image">
       <a [routerLink]="['place', place._id]" class="title">{{ place.title }}</a>
     </div>
   </div>
+
+
 </ng-template>

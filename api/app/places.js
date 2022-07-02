@@ -5,6 +5,7 @@ const config = require("../config");
 const {nanoid} = require("nanoid");
 const path = require("path");
 const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 
 const router = express.Router();
 
@@ -28,7 +29,16 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-router.post("/", auth, upload.single('image'), async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
+    try {
+        const place = await Place.findById(req.params.id).populate('user', 'displayName');
+        return res.send(place);
+    } catch(e) {
+        next(e);
+    }
+});
+
+router.post("/", auth, permit('admin', 'user'), upload.single('image'), async (req, res, next) => {
     try {
         if (!req.body.iAgree || (req.body.iAgree && req.body.iAgree === false)) {
             return res.status(400).send({error: 'Disagreed'});
@@ -46,7 +56,7 @@ router.post("/", auth, upload.single('image'), async (req, res, next) => {
 
         if (req.file) {
             placeData.image = req.file.filename;
-        }black
+        }
 
         const place = new Place(placeData);
         await place.save();

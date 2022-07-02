@@ -11,6 +11,19 @@ export const fetchPlacesFailure = createAction(
   props<{error: string}>()
 );
 
+export const fetchOnePlaceRequest = createAction(
+'[Places] One Fetch Request',
+  props<{id: string}>()
+);
+export const fetchOnePlaceSuccess = createAction(
+  '[Places] One Fetch Success',
+  props<{place: Place}>()
+);
+export const fetchOnePlaceFailure = createAction(
+  '[Places] One Fetch Failure',
+  props<{error: string}>()
+);
+
 export const createPlacesRequest = createAction(
   '[Places] Create Request',
   props<{placeData: PlaceData}>()

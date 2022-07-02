@@ -1,0 +1,227 @@
+<div class="about" *ngIf="(place | async)">
+  <div class="aboutDiv">
+    <h1 class="title">{{ (place | async)?.title }}</h1>
+    <p class="desc">{{ (place | async)?.description }}</p>
+  </div>
+  <img class="main-img" [src]="(place | async)!.image | image" [alt]="(place | async)!.title">
+</div>
+
+<div *ngIf="(images | async)">
+  <h3>Галерея</h3>
+  <div class="gallery">
+    <div *ngFor="let image of images | async" class="galleryCard">
+      <img [src]="image!.image | image" [alt]="image._id">
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <h3>Рейтинг</h3>
+  <div class="revCard">
+    <p><i>Общий</i></p>
+    <div class="rating">
+      <div>
+        <ngx-material-rating color="warn" [readonly]="true"
+                             [value]="over"
+                             [max]="5">
+        </ngx-material-rating>
+      </div>
+    </div>
+    <p>{{over}}</p>
+  </div>
+
+  <div class="revCard">
+    <p><i>Кухня</i></p>
+    <div class="rating">
+      <div>
+        <ngx-material-rating color="primary" [readonly]="true"
+                             [value]="foodRate"
+                             [max]="5">
+        </ngx-material-rating>
+      </div>
+    </div>
+    <p>{{foodRate}}</p>
+  </div>
+
+  <div class="revCard">
+    <p><i>Сервис</i></p>
+    <div class="rating">
+      <div>
+        <ngx-material-rating color="primary" [readonly]="true"
+                             [value]="serviceRate"
+                             [max]="5">
+        </ngx-material-rating>
+      </div>
+    </div>
+    <p>{{serviceRate}}</p>
+  </div>
+
+
+  <div class="revCard">
+    <p><i>Интерьер</i></p>
+    <div class="rating">
+      <div>
+        <ngx-material-rating color="primary" [readonly]="true"
+                             [value]="interiorRate"
+                             [max]="5">
+        </ngx-material-rating>
+      </div>
+    </div>
+    <p>{{interiorRate}}</p>
+  </div>
+
+</div>
+
+<hr>
+
+<div *ngIf="(reviews | async)" class="rev">
+  <h3>Отзывы</h3>
+  <div class="reviews">
+    <mat-card *ngFor="let rev of reviews | async" style="margin-bottom: 30px" class="card">
+      <mat-card-title>{{rev.user.displayName}}</mat-card-title>
+      <mat-card-subtitle>{{ rev.date.substr(11, 5) }}     {{ rev.date.substr(0, 10) }}</mat-card-subtitle>
+      <p class="revText">{{rev.text}}</p>
+      <div>
+        <div class="revCard">
+          <p><i>Кухня</i></p>
+          <div class="rating">
+            <div>
+              <ngx-material-rating color="primary" [readonly]="true"
+                                   [value]="rev.foodRate"
+                                   [max]="5">
+              </ngx-material-rating>
+            </div>
+          </div>
+          <p>{{rev.foodRate}}</p>
+        </div>
+
+        <div class="revCard">
+          <p><i>Сервис</i></p>
+          <div class="rating">
+            <div>
+              <ngx-material-rating color="primary" [readonly]="true"
+                                   [value]="rev.serviceRate"
+                                   [max]="5">
+              </ngx-material-rating>
+            </div>
+          </div>
+          <p>{{rev.serviceRate}}</p>
+        </div>
+
+
+        <div class="revCard">
+          <p><i>Интерьер</i></p>
+          <div class="rating">
+            <div>
+              <ngx-material-rating color="primary" [readonly]="true"
+                                   [value]="rev.interiorRate"
+                                   [max]="5">
+              </ngx-material-rating>
+            </div>
+          </div>
+          <p>{{rev.interiorRate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+
+<div class="addRev" *appHasRoles="['user']">
+  <h3>Добавить отзыв</h3>
+  <form
+    #formReview="ngForm"
+    fxLayout="column"
+    autocomplete="off"
+    (ngSubmit)="onSubmitFormReview()"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Текст</mat-label>
+      <textarea
+        name="text"
+        ngModel
+        matInput
+        required
+        cdkTextareaAutosize
+        #text="ngModel"
+        cdkAutosizeMinRows="3"
+      ></textarea>
+      <mat-error *ngIf="text.touched && text.hasError('required')">
+        Введите текст!
+      </mat-error>
+    </mat-form-field>
+    <div class="revSelects">
+      <mat-form-field appearance="fill">
+        <mat-label>Кухня</mat-label>
+        <mat-select ngModel required name="foodRate">
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Сервис</mat-label>
+
+        <mat-select ngModel required name="serviceRate">
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Интерьер</mat-label>
+        <mat-select ngModel required name="interiorRate">
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="formReview.invalid"
+    >
+      Добавить
+    </button>
+  </form>
+</div>
+<hr>
+
+<div class="addImage" *appHasRoles="['user']">
+  <h3>Добавить новое фото</h3>
+  <form
+    #imageForm="ngForm"
+    fxLayout="column"
+    autocomplete="off"
+    (ngSubmit)="onSubmitImageForm()"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Фото</mat-label>
+      <app-file-input name="image" required ngModel></app-file-input>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="imageForm.invalid"
+    >
+      Добавить
+    </button>
+  </form>
+
+</div>
