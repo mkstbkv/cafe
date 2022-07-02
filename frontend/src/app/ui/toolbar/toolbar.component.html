@@ -8,7 +8,7 @@
     </button>
     <mat-menu #menu="matMenu" >
       <button mat-menu-item disabled>{{ (user | async)?.displayName }}</button>
-      <button mat-menu-item [routerLink]="['/new/']">Добавить</button>
+      <button mat-menu-item [routerLink]="['new-place']">Добавить место</button>
       <button mat-menu-item (click)="logout()">Выйти</button>
     </mat-menu>
   </nav>

@@ -18,9 +18,6 @@ const PlaceSchema = new Schema({
     image: {
         type: String,
         default: true,
-    },
-    rate: {
-        type: Number
     }
 });
 

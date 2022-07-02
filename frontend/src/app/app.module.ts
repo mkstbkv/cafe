@@ -32,6 +32,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { RegisterComponent } from './pages/register/register.component';
 import { ToolbarComponent } from './ui/toolbar/toolbar.component';
 import { FooterComponent } from './ui/footer/footer.component';
+import { PlacesComponent } from './pages/places/places.component';
+import { PlaceComponent } from './pages/places/place/place.component';
+import { NewPlaceComponent } from './pages/places/new-place/new-place.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,10 @@ import { FooterComponent } from './ui/footer/footer.component';
     ValidateIdenticalDirective,
     RegisterComponent,
     ToolbarComponent,
-    FooterComponent
+    FooterComponent,
+    PlacesComponent,
+    PlaceComponent,
+    NewPlaceComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +76,7 @@ import { FooterComponent } from './ui/footer/footer.component';
     MatInputModule,
     MatMenuModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

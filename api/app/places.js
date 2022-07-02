@@ -33,7 +33,7 @@ router.post("/", auth, upload.single('image'), async (req, res, next) => {
         if (!req.body.iAgree || (req.body.iAgree && req.body.iAgree === false)) {
             return res.status(400).send({error: 'Disagreed'});
         }
-        if (!req.body.title || !req.body.description || !req.file.filename || !req.body.iAgree) {
+        if (!req.body.title || !req.body.description) {
             return res.status(400).send({message: 'Title, description, image are required!'});
         }
 
@@ -41,8 +41,12 @@ router.post("/", auth, upload.single('image'), async (req, res, next) => {
             user: req.user._id,
             title: req.body.title,
             description: req.body.description,
-            image: req.file.filename
+            image: null
         };
+
+        if (req.file) {
+            placeData.image = req.file.filename;
+        }black
 
         const place = new Place(placeData);
         await place.save();
