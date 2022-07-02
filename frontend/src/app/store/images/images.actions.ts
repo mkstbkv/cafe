@@ -1,6 +1,18 @@
 import { createAction, props } from '@ngrx/store';
 import { Image, ImageData } from '../../models/image.model';
 
+export const fetchAllImagesRequest = createAction(
+  '[Images] All Fetch Request',
+);
+export const fetchAllImagesSuccess = createAction(
+  '[Images] All Fetch Success',
+  props<{images: Image[]}>()
+);
+export const fetchAllImagesFailure = createAction(
+  '[Images] Fetch Failure',
+  props<{error: string}>()
+);
+
 export const fetchImagesRequest = createAction(
   '[Images] Fetch Request',
   props<{id: string}>()
@@ -13,6 +25,7 @@ export const fetchImagesFailure = createAction(
   '[Images] Fetch Failure',
   props<{error: string}>()
 );
+
 
 export const createImagesRequest = createAction(
   '[Images] Create Request',

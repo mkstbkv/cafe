@@ -11,6 +11,21 @@ export class ImagesService {
 
   constructor(private http: HttpClient) { }
 
+  getAllImages() {
+    return this.http.get<Image[]>(environment.apiUrl + '/images').pipe(
+      map(response => {
+        return response.map(placeData => {
+          return new Image(
+            placeData._id,
+            placeData.user,
+            placeData.place,
+            placeData.image
+          );
+        });
+      })
+    );
+  }
+
   getImages(id: string) {
     return this.http.get<Image[]>(environment.apiUrl + '/images/' + id).pipe(
       map(response => {

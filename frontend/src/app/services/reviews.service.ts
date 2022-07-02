@@ -11,6 +11,25 @@ export class ReviewsService {
 
   constructor(private http: HttpClient) { }
 
+  getAllReviews() {
+    return this.http.get<Review[]>(environment.apiUrl + '/reviews').pipe(
+      map(response => {
+        return response.map(reviewData => {
+          return new Review(
+            reviewData._id,
+            reviewData.user,
+            reviewData.place,
+            reviewData.text,
+            reviewData.foodRate,
+            reviewData.serviceRate,
+            reviewData.interiorRate,
+            reviewData.date,
+          );
+        });
+      })
+    );
+  }
+
   getReviews(id: string) {
     return this.http.get<Review[]>(environment.apiUrl + '/reviews/' + id).pipe(
       map(response => {

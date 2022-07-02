@@ -10,7 +10,7 @@ import {
   createReviewsRequest,
   createReviewsSuccess,
   deleteReviewsRequest,
-  deleteReviewsSuccess,
+  deleteReviewsSuccess, fetchAllReviewsFailure, fetchAllReviewsRequest, fetchAllReviewsSuccess,
   fetchReviewsFailure,
   fetchReviewsRequest,
   fetchReviewsSuccess
@@ -20,6 +20,16 @@ import { deleteImagesFailure } from '../images/images.actions';
 
 @Injectable()
 export class ReviewsEffects {
+  fetchAllReviews = createEffect(() => this.actions.pipe(
+    ofType(fetchAllReviewsRequest),
+    mergeMap(() => this.reviewsService.getAllReviews().pipe(
+      map(reviews => fetchAllReviewsSuccess({reviews})),
+      catchError(() => of(fetchAllReviewsFailure({
+        error: 'Something went wrong'
+      })))
+    ))
+  ));
+
   fetchReviews = createEffect(() => this.actions.pipe(
     ofType(fetchReviewsRequest),
     mergeMap(({id}) => this.reviewsService.getReviews(id).pipe(

@@ -10,7 +10,7 @@ import {
   createImagesSuccess,
   deleteImagesFailure,
   deleteImagesRequest,
-  deleteImageSuccess,
+  deleteImageSuccess, fetchAllImagesFailure, fetchAllImagesRequest, fetchAllImagesSuccess,
   fetchImagesFailure,
   fetchImagesRequest,
   fetchImagesSuccess
@@ -20,6 +20,15 @@ import { HelpersService } from '../../services/helpers.service';
 
 @Injectable()
 export class ImagesEffects {
+  fetchAllImages = createEffect(() => this.actions.pipe(
+    ofType(fetchAllImagesRequest),
+    mergeMap(() => this.imagesService.getAllImages().pipe(
+      map(images => fetchAllImagesSuccess({images})),
+      catchError(() => of(fetchAllImagesFailure({
+        error: 'Something went wrong'
+      })))
+    ))
+  ));
   fetchImages = createEffect(() => this.actions.pipe(
     ofType(fetchImagesRequest),
     mergeMap(({id}) => this.imagesService.getImages(id).pipe(

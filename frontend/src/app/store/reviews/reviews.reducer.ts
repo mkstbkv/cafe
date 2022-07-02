@@ -3,7 +3,7 @@ import { ReviewsState } from '../types';
 import {
   createReviewsFailure,
   createReviewsRequest,
-  createReviewsSuccess,
+  createReviewsSuccess, fetchAllReviewsFailure, fetchAllReviewsRequest, fetchAllReviewsSuccess,
   fetchReviewsFailure,
   fetchReviewsRequest,
   fetchReviewsSuccess
@@ -26,6 +26,18 @@ export const reviewsReducer = createReducer(
     reviews
   })),
   on(fetchReviewsFailure, (state, {error}) => ({
+    ...state,
+    fetchLoading: false,
+    fetchError: error
+  })),
+
+  on(fetchAllReviewsRequest, state => ({...state, fetchLoading: true})),
+  on(fetchAllReviewsSuccess, (state, {reviews}) => ({
+    ...state,
+    fetchLoading: false,
+    reviews
+  })),
+  on(fetchAllReviewsFailure, (state, {error}) => ({
     ...state,
     fetchLoading: false,
     fetchError: error

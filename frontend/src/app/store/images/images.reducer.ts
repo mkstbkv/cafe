@@ -3,7 +3,7 @@ import { ImagesState } from '../types';
 import {
   createImagesFailure,
   createImagesRequest,
-  createImagesSuccess,
+  createImagesSuccess, fetchAllImagesFailure, fetchAllImagesRequest, fetchAllImagesSuccess,
   fetchImagesFailure,
   fetchImagesRequest,
   fetchImagesSuccess
@@ -19,6 +19,18 @@ const initialState: ImagesState = {
 
 export const imagesReducer = createReducer(
   initialState,
+  on(fetchAllImagesRequest, state => ({...state, fetchLoading: true})),
+  on(fetchAllImagesSuccess, (state, {images}) => ({
+    ...state,
+    fetchLoading: false,
+    images
+  })),
+  on(fetchAllImagesFailure, (state, {error}) => ({
+    ...state,
+    fetchLoading: false,
+    fetchError: error
+  })),
+
   on(fetchImagesRequest, state => ({...state, fetchLoading: true})),
   on(fetchImagesSuccess, (state, {images}) => ({
     ...state,

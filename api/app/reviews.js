@@ -5,6 +5,15 @@ const permit = require("../middleware/permit");
 
 const router = express.Router();
 
+router.get("/", async (req, res, next) => {
+    try {
+        const reviews = await Review.find().populate('user', 'displayName');
+        return res.send(reviews);
+    } catch(e) {
+        next(e);
+    }
+});
+
 router.get("/:id", async (req, res, next) => {
     try {
         const reviews = await Review.find({place: req.params.id}).populate('user', 'displayName');

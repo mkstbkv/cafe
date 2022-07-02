@@ -19,6 +19,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage});
 
+router.get("/", async (req, res, next) => {
+    try {
+        const images = await Image.find().populate('user', 'displayName');
+        return res.send(images);
+    } catch(e) {
+        next(e);
+    }
+});
+
 router.get("/:id", async (req, res, next) => {
     try {
         const images = await Image.find({place: req.params.id}).populate('user', 'displayName');
