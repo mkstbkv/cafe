@@ -48,6 +48,8 @@ export class ReviewsEffects {
       map(() => deleteReviewsSuccess()),
       tap(() => {
         this.store.dispatch(fetchReviewsRequest({id: id.place}));
+        this.helpers.openSnackbar('Успешно удален!');
+
       }),
       catchError(() => of(deleteImagesFailure({error: 'No access!'})))
     ))

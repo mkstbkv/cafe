@@ -7,6 +7,7 @@ const path = require("path");
 const auth = require("../middleware/auth");
 const permit = require("../middleware/permit");
 const Review = require("../models/Review");
+const Image = require("../models/Image");
 
 const router = express.Router();
 
@@ -71,9 +72,15 @@ router.delete('/:id', auth, permit('admin'), async (req, res, next) => {
     try {
         const place = await Place.findById(req.params.id);
         const images = await Image.find({place: req.params.id});
-        await Image.deleteMany(images);
         const reviews = await Review.find({place: req.params.id});
-        await Review.deleteMany(reviews);
+
+        if (images) {
+            await Image.deleteMany({place: req.params.id});
+        }
+
+        if (reviews) {
+            await Review.deleteMany({place: req.params.id});
+        }
 
         await Place.deleteOne(place);
         return res.send({message: 'OK!'});

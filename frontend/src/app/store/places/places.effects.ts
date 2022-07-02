@@ -20,6 +20,7 @@ import {
   fetchPlacesSuccess
 } from './places.actions';
 import { PlacesService } from '../../services/places.service';
+import { HelpersService } from '../../services/helpers.service';
 
 @Injectable()
 export class PlacesEffects {
@@ -47,7 +48,10 @@ export class PlacesEffects {
     ofType(createPlacesRequest),
     mergeMap(({placeData}) => this.placesService.createPlace(placeData).pipe(
       map(() => createPlacesSuccess()),
-      tap(() => this.router.navigate(['/'])),
+      tap(() => {
+        this.router.navigate(['/'])
+        this.helpers.openSnackbar('Успешно добавлен!');
+      }),
       catchError(() => of(createPlacesFailure({error: 'Wrong data'})))
     ))
   ));
@@ -58,6 +62,7 @@ export class PlacesEffects {
       map(() => deletePlaceSuccess()),
       tap(() => {
         this.store.dispatch(fetchPlacesRequest());
+        this.helpers.openSnackbar('Успешно удален!');
       }),
       catchError(() => of(deletePlacesFailure({error: 'No access!'})))
     ))
@@ -67,6 +72,7 @@ export class PlacesEffects {
   constructor(
     private store: Store<AppState>,
     private actions: Actions,
+    private helpers: HelpersService,
     private placesService: PlacesService,
     private router: Router
   ) {}

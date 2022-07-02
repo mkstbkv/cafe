@@ -14,8 +14,8 @@
     <div class="card" *ngFor="let place of places | async">
       <img [src]="place.image | image" [alt]="place.image">
       <a [routerLink]="['place', place._id]" class="title">{{ place.title }}</a>
+      <button mat-raised-button color="warn" (click)="deletePlace(place._id)" *appHasRoles="['admin']">Удалить</button>
     </div>
   </div>
-
 
 </ng-template>

@@ -48,6 +48,7 @@ export class ImagesEffects {
       map(() => deleteImageSuccess()),
       tap(() => {
         this.store.dispatch(fetchImagesRequest({id: id.place}));
+        this.helpers.openSnackbar('Успешно удален!');
       }),
       catchError(() => of(deleteImagesFailure({error: 'No access!'})))
     ))
