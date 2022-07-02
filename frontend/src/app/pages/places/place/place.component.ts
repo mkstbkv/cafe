@@ -3,8 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/types';
 import { fetchOnePlaceRequest } from '../../../store/places/places.actions';
-import { createReviewsRequest, fetchReviewsRequest } from '../../../store/reviews/reviews.actions';
-import { createImagesRequest, fetchImagesRequest } from '../../../store/images/images.actions';
+import {
+  createReviewsRequest,
+  deleteReviewsRequest,
+  fetchReviewsRequest
+} from '../../../store/reviews/reviews.actions';
+import { createImagesRequest, deleteImagesRequest, fetchImagesRequest } from '../../../store/images/images.actions';
 import { Observable } from 'rxjs';
 import { Place } from '../../../models/place.model';
 import { Review, ReviewData } from '../../../models/review.model';
@@ -106,4 +110,12 @@ export class PlaceComponent implements OnInit {
     this.checkReviews();
   }
 
+  deleteImage(id: string) {
+    this.store.dispatch(deleteImagesRequest({id: id, place: this.id}));
+  }
+
+  deleteReview(id: string) {
+    this.store.dispatch(deleteReviewsRequest({id: id, place: this.id}));
+    this.checkReviews();
+  }
 }

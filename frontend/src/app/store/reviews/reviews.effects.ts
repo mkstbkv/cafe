@@ -9,11 +9,14 @@ import {
   createReviewsFailure,
   createReviewsRequest,
   createReviewsSuccess,
+  deleteReviewsRequest,
+  deleteReviewsSuccess,
   fetchReviewsFailure,
   fetchReviewsRequest,
   fetchReviewsSuccess
 } from './reviews.actions';
 import { HelpersService } from '../../services/helpers.service';
+import { deleteImagesFailure } from '../images/images.actions';
 
 @Injectable()
 export class ReviewsEffects {
@@ -36,6 +39,17 @@ export class ReviewsEffects {
         this.store.dispatch(fetchReviewsRequest({id: reviewData.place}))
       }),
       catchError(() => of(createReviewsFailure({error: 'Wrong data'})))
+    ))
+  ));
+
+  deleteReview = createEffect(() => this.actions.pipe(
+    ofType(deleteReviewsRequest),
+    mergeMap((id) => this.reviewsService.deleteReview(id.id).pipe(
+      map(() => deleteReviewsSuccess()),
+      tap(() => {
+        this.store.dispatch(fetchReviewsRequest({id: id.place}));
+      }),
+      catchError(() => of(deleteImagesFailure({error: 'No access!'})))
     ))
   ));
 

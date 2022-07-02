@@ -35,3 +35,15 @@ export const createPlacesFailure = createAction(
   '[Places] Create Failure',
   props<{error: string}>()
 );
+
+export const deletePlaceRequest = createAction(
+  '[Places] Delete Request',
+  props<{id: string}>()
+);
+export const deletePlaceSuccess = createAction(
+  '[Places] Delete Success'
+);
+export const deletePlacesFailure = createAction(
+  '[Places] Delete Failure',
+  props<{error: string}>()
+);

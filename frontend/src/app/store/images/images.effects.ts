@@ -8,6 +8,9 @@ import {
   createImagesFailure,
   createImagesRequest,
   createImagesSuccess,
+  deleteImagesFailure,
+  deleteImagesRequest,
+  deleteImageSuccess,
   fetchImagesFailure,
   fetchImagesRequest,
   fetchImagesSuccess
@@ -36,6 +39,17 @@ export class ImagesEffects {
         this.store.dispatch(fetchImagesRequest({id: imageData.place}))
       }),
       catchError(() => of(createImagesFailure({error: 'Wrong data'})))
+    ))
+  ));
+
+  deleteImage = createEffect(() => this.actions.pipe(
+    ofType(deleteImagesRequest),
+    mergeMap((id) => this.imagesService.deleteImage(id.id).pipe(
+      map(() => deleteImageSuccess()),
+      tap(() => {
+        this.store.dispatch(fetchImagesRequest({id: id.place}));
+      }),
+      catchError(() => of(deleteImagesFailure({error: 'No access!'})))
     ))
   ));
 

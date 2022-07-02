@@ -8,7 +8,13 @@ import { AppState } from '../types';
 import {
   createPlacesFailure,
   createPlacesRequest,
-  createPlacesSuccess, fetchOnePlaceFailure, fetchOnePlaceRequest, fetchOnePlaceSuccess,
+  createPlacesSuccess,
+  deletePlaceRequest,
+  deletePlacesFailure,
+  deletePlaceSuccess,
+  fetchOnePlaceFailure,
+  fetchOnePlaceRequest,
+  fetchOnePlaceSuccess,
   fetchPlacesFailure,
   fetchPlacesRequest,
   fetchPlacesSuccess
@@ -43,6 +49,17 @@ export class PlacesEffects {
       map(() => createPlacesSuccess()),
       tap(() => this.router.navigate(['/'])),
       catchError(() => of(createPlacesFailure({error: 'Wrong data'})))
+    ))
+  ));
+
+  deletePlace = createEffect(() => this.actions.pipe(
+    ofType(deletePlaceRequest),
+    mergeMap(({id}) => this.placesService.deletePlace(id).pipe(
+      map(() => deletePlaceSuccess()),
+      tap(() => {
+        this.store.dispatch(fetchPlacesRequest());
+      }),
+      catchError(() => of(deletePlacesFailure({error: 'No access!'})))
     ))
   ));
 

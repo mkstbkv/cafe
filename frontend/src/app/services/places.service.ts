@@ -51,4 +51,8 @@ export class PlacesService {
     });
     return this.http.post(environment.apiUrl + '/places', formData);
   }
+
+  deletePlace(id: string) {
+    return this.http.delete(environment.apiUrl + '/places/' + id)
+  }
 }

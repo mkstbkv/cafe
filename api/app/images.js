@@ -48,6 +48,15 @@ router.post("/", auth, permit('admin', 'user'), upload.single('image'), async (r
     }
 });
 
+router.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+    try {
+        const image = await Image.findById(req.params.id);
+        await Image.deleteOne(image);
+        return res.send({message: 'OK!'});
+    } catch (e) {
+        next(e);
+    }
+});
 
 
 module.exports = router;

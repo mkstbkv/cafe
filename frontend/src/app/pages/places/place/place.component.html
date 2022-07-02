@@ -11,6 +11,7 @@
   <div class="gallery">
     <div *ngFor="let image of images | async" class="galleryCard">
       <img [src]="image!.image | image" [alt]="image._id">
+      <button mat-raised-button color="warn" (click)="deleteImage(image._id)" *appHasRoles="['admin']">Удалить</button>
     </div>
   </div>
 </div>
@@ -124,12 +125,14 @@
           <p>{{rev.interiorRate}}</p>
         </div>
       </div>
+      <button mat-raised-button color="warn" (click)="deleteReview(rev._id)" *appHasRoles="['admin']">Удалить</button>
+
     </mat-card>
   </div>
 </div>
 
 
-<div class="addRev" *appHasRoles="['user']">
+<div class="addRev" *appHasRoles="['user', 'admin']">
   <h3>Добавить отзыв</h3>
   <form
     #formReview="ngForm"
@@ -201,7 +204,7 @@
 </div>
 <hr>
 
-<div class="addImage" *appHasRoles="['user']">
+<div class="addImage" *appHasRoles="['user', 'admin']">
   <h3>Добавить новое фото</h3>
   <form
     #imageForm="ngForm"

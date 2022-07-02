@@ -38,5 +38,15 @@ router.post("/", auth, permit('admin', 'user'), async (req, res, next) => {
     }
 });
 
+router.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+    try {
+        const review = await Review.findById(req.params.id);
+        await Review.deleteOne(review);
+        return res.send({message: 'OK!'});
+    } catch (e) {
+        next(e);
+    }
+});
+
 
 module.exports = router;

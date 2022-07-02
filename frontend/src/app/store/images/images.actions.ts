@@ -25,3 +25,15 @@ export const createImagesFailure = createAction(
   '[Images] Create Failure',
   props<{error: string}>()
 );
+
+export const deleteImagesRequest = createAction(
+  '[Images] Delete Request',
+  props<{id: string, place: string}>()
+);
+export const deleteImageSuccess = createAction(
+  '[Images] Delete Success'
+);
+export const deleteImagesFailure = createAction(
+  '[Images] Delete Failure',
+  props<{error: string}>()
+);

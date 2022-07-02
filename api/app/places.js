@@ -6,6 +6,7 @@ const {nanoid} = require("nanoid");
 const path = require("path");
 const auth = require("../middleware/auth");
 const permit = require("../middleware/permit");
+const Review = require("../models/Review");
 
 const router = express.Router();
 
@@ -62,6 +63,21 @@ router.post("/", auth, permit('admin', 'user'), upload.single('image'), async (r
         await place.save();
         return res.send(place);
     } catch(e) {
+        next(e);
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+    try {
+        const place = await Place.findById(req.params.id);
+        const images = await Image.find({place: req.params.id});
+        await Image.deleteMany(images);
+        const reviews = await Review.find({place: req.params.id});
+        await Review.deleteMany(reviews);
+
+        await Place.deleteOne(place);
+        return res.send({message: 'OK!'});
+    } catch (e) {
         next(e);
     }
 });

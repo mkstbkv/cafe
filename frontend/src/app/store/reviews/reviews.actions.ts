@@ -25,3 +25,15 @@ export const createReviewsFailure = createAction(
   '[Reviews] Create Failure',
   props<{error: string}>()
 );
+
+export const deleteReviewsRequest = createAction(
+  '[Reviews] Delete Request',
+  props<{id: string, place: string}>()
+);
+export const deleteReviewsSuccess = createAction(
+  '[Reviews] Delete Success'
+);
+export const deleteReviewFailure = createAction(
+  '[Reviews] Delete Failure',
+  props<{error: string}>()
+);
