@@ -2,4 +2,12 @@ node_modules
 .idea/
 public/uploads/*
 !public/uploads/.gitkeep
-!public/uploads/2.jpg
+!public/uploads/pishpek.jpg
+!public/uploads/pishpek-1.jpg
+!public/uploads/pishpek-2.jpg
+!public/uploads/lamaison.jpg
+!public/uploads/lamaison-1.jpg
+!public/uploads/lamaison-2.jpg
+!public/uploads/oblako.jpg
+!public/uploads/oblako-1.jpg
+!public/uploads/oblako-2.jpg
